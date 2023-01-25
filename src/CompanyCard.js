@@ -6,7 +6,7 @@ function CompanyCard({ handle, description, logo }) {
     <div className="CompanyCard">
       <Link to={`/companies/${handle}`}>{handle}</Link>
       <p>{description}</p>
-      <img src={logo} alt={handle}/>
+      {logo && <img src={logo} alt={handle}/>}
     </div>
   );
 }

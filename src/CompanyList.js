@@ -35,9 +35,11 @@ function CompanyList() {
   return (
     // TODO: Form
     <div>
+      <h2>ADD FORM</h2>
       {companies.companies.map(c => (
         <CompanyCard
           key={c.handle}
+          description={c.description}
           handle={c.handle}
           logo={c.logoUrl} />
       ))}

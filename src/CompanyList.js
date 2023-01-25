@@ -37,17 +37,7 @@ function CompanyList() {
       isLoading: true
     }));
 
-    // console.log("handleSearch term=", term)
-
-    // Fetch data
-    // show empty msg if no company found
-    // show companies with name
-    // try catch
-
-    // TODO: Ask if better to filter from companies we have or make another
-    // request
-
-    // Do we want to show message "Searching..."
+    //TODO: Do we want to show message "Searching..."
 
     try {
       const resp = await JoblyApi.searchCompanies(term);
@@ -57,7 +47,10 @@ function CompanyList() {
         companies: resp
       }));
     } catch (err) {
-
+      setCompanies(prevState => ({
+        ...prevState,
+        isLoadingError: true
+      }))
     }
   }
 

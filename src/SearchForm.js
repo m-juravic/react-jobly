@@ -22,7 +22,14 @@ function SearchForm({ handleSearch }) {
   return (
     <div className="SearchForm">
       <form onSubmit={handleSubmit}>
-        <input name="searchTerm" onChange={handleChange} value={formData.searchTerm} placeholder="Enter search term.." />
+        <input
+          name="searchTerm"
+          onChange={handleChange}
+          value={formData.searchTerm}
+          placeholder="Enter search term.."
+          minLength={3}
+          required
+          />
         <button type="submit">Submit</button>
       </form>
     </div>

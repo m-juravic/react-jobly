@@ -46,6 +46,15 @@ class JoblyApi {
     return res.companies;
   }
 
+  static async searchCompanies(term) {
+    const res = await this.request("companies/",
+      {
+        nameLike: term
+      }
+    );
+    return res.companies;
+  }
+
 
   /** Get details on a company by handle. */
 
@@ -63,10 +72,10 @@ class JoblyApi {
 
   /** Search for a job */
 
-  static async searchForJobs(term){
+  static async searchForJobs(term) {
     const res = await this.request("jobs/", {
       title: term
-    })
+    });
     return res.jobs;
   }
 }

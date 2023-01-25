@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 
+//use NavLink rather than Link
 function Header() {
   return (
     <header className="Header">

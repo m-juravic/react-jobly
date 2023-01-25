@@ -4,21 +4,21 @@ import CompanyCard from "./CompanyCard";
 
 function CompanyList() {
 
+  //add error handling and try/catch in api call
   const [companies, setCompanies] = useState({
     isLoading: true,
     companies: []
   });
 
   useEffect(function fetchAndSetCompanies(){
-    async function fetchComapnies(){
+    async function fetchCompanies(){
       const companies = await JoblyApi.getCompanies();
       setCompanies(({
-        ...companies,
         isLoading: false,
         companies
       }))
     }
-    fetchComapnies()
+    fetchCompanies()
   }, [])
 
   // console.log("companies=", companies)
@@ -27,8 +27,14 @@ function CompanyList() {
 
   return (
     // TODO: Form
+    //TODO: handle default logo
     <div>
-      {companies.companies.map(c => <CompanyCard key={c.handle} handle={c.handle}/>)}
+      {companies.companies.map(c => (
+      <CompanyCard
+        key={c.handle}
+        handle={c.handle}
+        logo={c.logoUrl}/>
+      ))}
     </div>
   );
 }

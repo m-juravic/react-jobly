@@ -38,6 +38,8 @@ class JoblyApi {
 
   // Individual API routes
 
+  //update variables to const
+
   /** Get all companies */
 
   static async getCompanies() {

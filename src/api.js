@@ -46,6 +46,9 @@ class JoblyApi {
     return res.companies;
   }
 
+  // TODO: Combine searchCompanies with getCompanies
+  // since they hit the same endpoint
+
   static async searchCompanies(term) {
     const res = await this.request("companies/",
       {

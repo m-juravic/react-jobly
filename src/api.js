@@ -38,12 +38,11 @@ class JoblyApi {
 
   // Individual API routes
 
-  //update variables to const
 
   /** Get all companies */
 
   static async getCompanies() {
-    let res = await this.request("companies/");
+    const res = await this.request("companies/");
     return res.companies;
   }
 
@@ -51,21 +50,21 @@ class JoblyApi {
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
+    const res = await this.request(`companies/${handle}`);
     return res.company;
   }
 
   /** Get all jobs */
 
   static async getJobs() {
-    let res = await this.request("jobs/");
+    const res = await this.request("jobs/");
     return res.jobs;
   }
 
   /** Search for a job */
 
   static async searchForJobs(term){
-    let res = await this.request("jobs/", {
+    const res = await this.request("jobs/", {
       title: term
     })
     return res.jobs;

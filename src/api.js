@@ -41,22 +41,22 @@ class JoblyApi {
 
   /** Get all companies */
 
-  static async getCompanies() {
-    const res = await this.request("companies/");
+  static async getCompanies(term) {
+    const res = await this.request("companies", {nameLike: term});
     return res.companies;
   }
 
   // TODO: Combine searchCompanies with getCompanies
   // since they hit the same endpoint
 
-  static async searchCompanies(term) {
-    const res = await this.request("companies/",
-      {
-        nameLike: term
-      }
-    );
-    return res.companies;
-  }
+  // static async searchCompanies(term) {
+  //   const res = await this.request("companies/",
+  //     {
+  //       nameLike: term
+  //     }
+  //   );
+  //   return res.companies;
+  // }
 
 
   /** Get details on a company by handle. */

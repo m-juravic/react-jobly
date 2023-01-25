@@ -15,7 +15,7 @@ function SearchForm({ handleSearch }) {
 
   function handleSubmit(evt) {
     evt.preventDefault()
-    handleSearch(formData.searchTerm)
+    handleSearch(formData.searchTerm.trim())
     setFormData({searchTerm: ""})
   }
 

@@ -8,54 +8,30 @@ function CompanyList() {
 
   const [companies, setCompanies] = useState({
     isLoading: true,
-    isLoadingError: false,
     companies: []
   });
 
   useEffect(function fetchAndSetCompanies() {
     async function fetchCompanies() {
-      try {
-        const companies = await JoblyApi.getCompanies();
-        setCompanies(({
-          isLoading: false,
-          companies
-        }));
-      } catch (err) {
-        setCompanies(prev => ({
-          ...prev,
-          isLoadingError: true
-        }));
-      }
+      handleSearch();
     }
     fetchCompanies();
   }, []);
 
   async function handleSearch(term) {
 
-    setCompanies(prevState => ({
-      ...prevState,
-      isLoading: true
-    }));
-
-    //TODO: Do we want to show message "Searching..."
 
     try {
-      const resp = await JoblyApi.searchCompanies(term);
-      console.log("resp=", resp);
+      const resp = await JoblyApi.getCompanies(term);
       setCompanies(({
         isLoading: false,
         companies: resp
       }));
     } catch (err) {
-      setCompanies(prevState => ({
-        ...prevState,
-        isLoadingError: true
-      }))
+      return <h2>Problems fetching data...</h2>
     }
   }
-
-  if (companies.isLoadingError) return <h2>Problems fetching data...</h2>;
-
+  //TODO: create spinner component & error handling component
   if (companies.isLoading) return <h2>Loading...</h2>;
 
   return (

@@ -1,5 +1,6 @@
 import "./JobCard.css";
 
+//TODO: not all jobs have equity  and sexify salary(proper salary)
 function JobCard({ id, title, salary, company, equity }) {
   return (
     <div className="JobCard" id={id}>

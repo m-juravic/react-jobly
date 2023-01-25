@@ -4,6 +4,7 @@ import Homepage from "./Homepage";
 import JobList from "./JobList";
 import CompanyDetail from "./CompanyDetail";
 
+//TODO: add catch all route
 function RouteList() {
   return (
     <Routes>

@@ -46,19 +46,6 @@ class JoblyApi {
     return res.companies;
   }
 
-  // TODO: Combine searchCompanies with getCompanies
-  // since they hit the same endpoint
-
-  // static async searchCompanies(term) {
-  //   const res = await this.request("companies/",
-  //     {
-  //       nameLike: term
-  //     }
-  //   );
-  //   return res.companies;
-  // }
-
-
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
@@ -68,19 +55,13 @@ class JoblyApi {
 
   /** Get all jobs */
 
-  static async getJobs() {
-    const res = await this.request("jobs/");
-    return res.jobs;
-  }
-
-  /** Search for a job */
-
-  static async searchForJobs(term) {
+  static async getJobs(term) {
     const res = await this.request("jobs/", {
       title: term
     });
     return res.jobs;
   }
+
 }
 
 export default JoblyApi;

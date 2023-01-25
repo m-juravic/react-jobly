@@ -1,56 +1,53 @@
-import { useState, useEffect} from "react";
-import JoblyApi from "./api";
-import JobListCard from "./JobListCard"
-import SearchForm from "./SearchForm"
+import { useState, useEffect } from "react";
+import JoblyApi from "./helpers/api";
+import JobListCard from "./JobListCard";
+import NotFound from "./NotFound";
+import SearchForm from "./SearchForm";
+
+/**
+ * Lists jobs
+ *
+ * State:
+ * -jobs [isLoading: true, jobs: [{
+      "id": 1,
+      "title": "Conservator, furniture",
+      "salary": 110000,
+      "equity": "0",
+      "companyHandle": "watson-davis",
+      "companyName": "Watson-Davis"
+    },...]]
+ *
+ * {RouteList} => JobList
+ */
 
 function JobList() {
 
   const [jobs, setJobs] = useState({
     isLoading: true,
-    isLoadingError: false,
     jobs: []
   });
 
 
   useEffect(function fetchAndSetJobs() {
     async function fetchJobs() {
-      try {
-        const jobs = await JoblyApi.getJobs();
-        setJobs(({
-          isLoading: false,
-          jobs
-        }))
-      } catch (err) {
-        setJobs(prevState => ({
-          ...prevState,
-          isLoadingError: true
-        }));
-      }
+      handleSearch()
     }
     fetchJobs();
   }, []);
 
   async function handleSearch(term) {
-    setJobs(prevState => ({
-      ...prevState,
-      isLoading: true
-    }))
-
     try {
-      const resp = await JoblyApi.searchForJobs(term);
+      // TODO: update searchForJobs
+      const resp = await JoblyApi.getJobs(term);
       setJobs(({
         isLoading: false,
         jobs: resp
-      }))
+      }));
     } catch (err) {
-      setJobs(prevState => ({
-        ...prevState,
-        isLoadingError: true
-      }))
+      // return <h2>Problems fetching data...</h2>
+      return <NotFound message="Problems fetching job data..." />
     }
   }
-
-  if (jobs.isLoadingError) return <h2>Problems fetching data...</h2>;
 
   if (jobs.isLoading) return <h2>Loading...</h2>;
 
@@ -58,9 +55,9 @@ function JobList() {
   return (
     <div>
       <SearchForm handleSearch={handleSearch} />
-      <JobListCard jobs={jobs.jobs}/>
+      <JobListCard jobs={jobs.jobs} />
+      {jobs.jobs.length === 0 && <h2>No jobs found.</h2>}
     </div>
-
   );
 }
 

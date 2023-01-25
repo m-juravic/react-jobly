@@ -1,5 +1,5 @@
 import "./JobCard.css";
-import convertAndFormat from "./_helper"
+import convertAndFormat from "./helpers/currencyConverter"
 
 /**
  *Simple presentation component for Job
@@ -9,6 +9,7 @@ import convertAndFormat from "./_helper"
  *
  * {JobListCard} => JobCard
  */
+
 function JobCard({ id, title, salary, company, equity }) {
   return (
     <div className="JobCard" id={id}>

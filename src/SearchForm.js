@@ -12,6 +12,9 @@ import "./SearchForm.css";
  * -formData
  *
  * {CompanyList or JobList} => SearchForm
+ *
+ * TODO:
+ *  - Make form not submitable if empty
  */
 function SearchForm({ handleSearch }) {
 

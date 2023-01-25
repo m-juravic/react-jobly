@@ -4,36 +4,42 @@ import CompanyCard from "./CompanyCard";
 
 function CompanyList() {
 
-  //add error handling and try/catch in api call
   const [companies, setCompanies] = useState({
     isLoading: true,
+    isLoadingError: false,
     companies: []
   });
 
-  useEffect(function fetchAndSetCompanies(){
-    async function fetchCompanies(){
-      const companies = await JoblyApi.getCompanies();
-      setCompanies(({
-        isLoading: false,
-        companies
-      }))
+  useEffect(function fetchAndSetCompanies() {
+    async function fetchCompanies() {
+      try {
+        const companies = await JoblyApi.getCompanies();
+        setCompanies(({
+          isLoading: false,
+          companies
+        }));
+      } catch (err) {
+        setCompanies(prev => ({
+          ...prev,
+          isLoadingError: true
+        }));
+      }
     }
-    fetchCompanies()
-  }, [])
+    fetchCompanies();
+  }, []);
 
-  // console.log("companies=", companies)
+  if (companies.isLoadingError) return <h2>Problems fetching data...</h2>;
 
-  if(companies.isLoading) return <h2>Loading...</h2>
+  if (companies.isLoading) return <h2>Loading...</h2>;
 
   return (
     // TODO: Form
-    //TODO: handle default logo
     <div>
       {companies.companies.map(c => (
-      <CompanyCard
-        key={c.handle}
-        handle={c.handle}
-        logo={c.logoUrl}/>
+        <CompanyCard
+          key={c.handle}
+          handle={c.handle}
+          logo={c.logoUrl} />
       ))}
     </div>
   );

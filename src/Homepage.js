@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import userContext from "./userContext";
 
+/** Renders homepage. */
+
 function Homepage() {
   const { username } = useContext(userContext);
 

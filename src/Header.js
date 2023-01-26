@@ -21,7 +21,7 @@ function Header({handleLogout}) {
           }
           {!username && <>
             <NavLink to="/login">Login</NavLink>
-            <NavLink to="/signup">Sign up</NavLink>
+            <NavLink to="/register">Sign up</NavLink>
           </>
           }
         </div>

@@ -5,10 +5,11 @@ import JobList from "./JobList";
 import CompanyDetail from "./CompanyDetail";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm"
+import ProfileForm from "./ProfileForm";
 
 /** Renders application routes */
 
-function RouteList({handleLogin, handleLogout, handleRegister}) {
+function RouteList({handleLogin, handleRegister}) {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
@@ -17,6 +18,8 @@ function RouteList({handleLogin, handleLogout, handleRegister}) {
       <Route path="/jobs" element={<JobList />} />
       <Route path="/login" element={<LoginForm handleLogin={handleLogin}/>} />
       <Route path="/register" element={<RegisterForm handleRegister={handleRegister}/>} />
+      <Route path="/profile" element={<ProfileForm />} />
+
       {/* <Route path="/logout"/> */}
 
       <Route path="*" element={<Navigate to="/" />} />

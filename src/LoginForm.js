@@ -7,13 +7,26 @@ const DEFAULT_FORMDATA = {
   password: ""
 };
 
+/** Form for logging in.
+ *
+ * State:
+ * - formData, formError
+ *
+ * Props:
+ * - handleLogin: function to call in parent.
+ *
+ * { RouteList} -> LoginForm
+ */
+
+
 function LoginForm({ handleLogin }) {
   const [formData, setFormData] = useState(DEFAULT_FORMDATA);
   // const [formErrors, setFormErrors] = useState([]);
   const [formError, setFormError] = useState("");
 
-
   const navigate = useNavigate();
+
+  /** Update form input. */
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -22,6 +35,8 @@ function LoginForm({ handleLogin }) {
       [name]: value
     }));
   }
+
+  /** Call parent function and clear form. */
 
   async function handleSubmit(evt) {
     evt.preventDefault();

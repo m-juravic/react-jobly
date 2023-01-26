@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import Alert from "./Alert";
 
 const DEFAULT_FORMDATA = {
   username: "",
@@ -11,6 +12,9 @@ const DEFAULT_FORMDATA = {
 
 /** Form for registering.
  *
+ * State:
+ * - formData, formError
+ *
  * Props:
  * - handleRegister: function to call in parent.
  *
@@ -19,6 +23,7 @@ const DEFAULT_FORMDATA = {
 
 function RegisterForm({ handleRegister }) {
   const [formData, setFormData] = useState(DEFAULT_FORMDATA);
+  const [formErrors, setFormErrors] = useState([]);
 
   const navigate = useNavigate();
 
@@ -39,14 +44,16 @@ function RegisterForm({ handleRegister }) {
       await handleRegister(formData);
       navigate("/");
     } catch (err) {
-      console.log("Error handling registration", err);
+      setFormErrors([err])
     }
     setFormData(DEFAULT_FORMDATA);
   }
 
+  console.log("form errors=", formErrors)
+
   return (
     <div>
-    {/* {formError && <Alert message={formError} />} */}
+    {formErrors && formErrors.map(e => <Alert message={e.message} />)}
 
     <form onSubmit={handleSubmit} >
       <div>

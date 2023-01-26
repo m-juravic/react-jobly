@@ -92,6 +92,7 @@ function App() {
   console.log("fetching errors=", fetchingErrors)
 
 
+  /** Handles logging in. */
   async function handleLogin(formData) {
     try {
       const token = await JoblyApi.loginUser(formData);
@@ -102,18 +103,22 @@ function App() {
     }
   }
 
+  /** Handles logging out. */
   function handleLogout() {
     removeToken();
     Navigate("/");
   }
 
+  /** Handles registration */
+
   async function handleRegister(formData) {
     try {
       const token = await JoblyApi.registerUser(formData);
       setToken(token);
+      fetchUserDataFromAPI();
     } catch (err) {
-      console.log("error=", err);
-      throw new Error("Failed to register user");
+      // console.log("error=", err);
+      throw new Error(err);
     }
   }
 

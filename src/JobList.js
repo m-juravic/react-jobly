@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import JoblyApi from "./helpers/api";
 import JobListCard from "./JobListCard";
+import Loader from "./Loader";
 import NotFound from "./NotFound";
 import SearchForm from "./SearchForm";
 
@@ -37,19 +38,17 @@ function JobList() {
 
   async function handleSearch(term) {
     try {
-      // TODO: update searchForJobs
       const resp = await JoblyApi.getJobs(term);
       setJobs(({
         isLoading: false,
         jobs: resp
       }));
     } catch (err) {
-      // return <h2>Problems fetching data...</h2>
       return <NotFound message="Problems fetching job data..." />
     }
   }
 
-  if (jobs.isLoading) return <h2>Loading...</h2>;
+  if (jobs.isLoading) return <Loader />;
 
 
   return (

@@ -1,5 +1,14 @@
 import JobCard from "./JobCard";
 
+/**
+ * Creates individual job cards
+ *
+ * Prop:
+ * - jobs, companyName
+ *
+ * {JobList} => JobListCard
+ */
+
 function JobListCard({ jobs, companyName }) {
   return (
     <>

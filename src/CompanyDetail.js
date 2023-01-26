@@ -3,13 +3,32 @@ import { useParams } from "react-router-dom";
 import JoblyApi from "./helpers/api";
 
 import JobListCard from "./JobListCard";
+import Loader from "./Loader";
+import NotFound from "./NotFound";
+
+/**
+ * Shows company detail
+ *
+ * useParams:
+ * - handle
+ *
+ * State:
+ * - company [isLoading:true, data: {
+      "handle": "anderson-arias-morrow",
+      "name": "Anderson, Arias and Morrow",
+      "description": "Somebody program how I. Face give away discussion view act inside. Your official relationship administration here.",
+      "numEmployees": 245,
+      "logoUrl": "/logos/logo3.png"
+    }]
+ *
+ * {JobList} => JobListCard
+ */
 
 function CompanyDetail() {
   const { handle } = useParams();
 
   const [company, setCompany] = useState({
     isLoading: true,
-    isLoadingError: false,
     data: null
   });
 
@@ -20,22 +39,17 @@ function CompanyDetail() {
         const resp = await JoblyApi.getCompany(handle);
         setCompany(prevState => ({
           isLoading: false,
-          isLoadingError: false,
           data: resp
         }));
       } catch (err) {
-        setCompany(prevState => ({
-          ...prevState,
-          isLoadingError: true
-        }));
+        return <NotFound message="Problems fetching company data..." />;
       }
 
     }
     fetchCompany();
   }, []);
 
-  if (company.isLoadingError) return <h1>Problems fetching data...</h1>;
-  if (company.isLoading) return <h1>Loading...</h1>;
+  if (company.isLoading) return <Loader />;
 
   return (
     <div>

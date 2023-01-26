@@ -1,3 +1,8 @@
+/**
+ * Renders the homepage
+ *
+ */
+
 function Homepage() {
   return (
     <>

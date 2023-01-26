@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 
+/** Renders the header and navigation */
+
 function Header() {
   return (
     <header className="Header">

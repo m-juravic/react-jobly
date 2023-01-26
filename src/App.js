@@ -1,5 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import userContext from "./userContext";
+import alertContext from "./alertContext";
 import './App.css';
 import Header from './Header';
 import RouteList from './RouteList';
@@ -7,6 +8,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import NotFound from './NotFound';
 import Loader from './Loader';
+import JoblyApi from './helpers/api';
 
 const DEFAULT_USER_INFO = {
   username: null,
@@ -16,15 +18,18 @@ const DEFAULT_USER_INFO = {
   isLoading: true
 };
 
+const DEFAULT_ALERTS = {};
+
 const BASE_URL = "http://localhost:3001";
 
 /** Renders application */
 
 function App() {
   const [user, setUser] = useState(DEFAULT_USER_INFO);
+  const [alerts, setAlerts] = useState(DEFAULT_ALERTS);
 
-  function setToken() {
-
+  function setToken(token) {
+    localStorage.setItem("token", token);
   }
 
   function getToken() {
@@ -72,17 +77,34 @@ function App() {
 
   if (user.isLoading && getToken()) return <Loader />;
 
+  async function handleLogin(formData) {
+    //TODO: need to send message if login is invalid
+    try {
+      const token = await JoblyApi.loginUser(formData);
+      setToken(token);
+      setUser(u => ({
+        ...u,
+      }))
+    } catch(err) {
+      setAlerts({alert: "Invalid username or password"});
+    }
+  }
+
+  console.log("alerts=", alerts);
 
   return (
     <userContext.Provider value={user}>
+    <alertContext.Provider value={alerts}>
       <div className="App">
         <BrowserRouter>
           <Header />
-          <RouteList />
+          <RouteList handleLogin={handleLogin}/>
         </BrowserRouter>
       </div>
+    </alertContext.Provider>
     </userContext.Provider>
   );
 }
 
 export default App;
+

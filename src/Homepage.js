@@ -16,7 +16,7 @@ function Homepage() {
       {username && <h2>Welcome Back, {username}!</h2>}
       {!username && <>
         <Link to="/login">Login</Link> <br /><br />
-        <Link to="/signup">Sign up</Link>
+        <Link to="/register">Sign up</Link>
       </>}
     </>
   );

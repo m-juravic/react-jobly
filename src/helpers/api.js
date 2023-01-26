@@ -68,9 +68,17 @@ class JoblyApi {
     const res = await this.request("auth/token", data, "post");
     return res.token;
   }
+
+  /** Register user */
+
+  static async registerUser(data) {
+    const res = await this.request("auth/register", data, "post");
+    return res.token
+  }
+
 }
 // async function test() {
-//   const resp = await JoblyApi.loginUser({username: "maria", password: "password"});
+//   const resp = await JoblyApi.registerUser({username: "sunce", firstName: "Sunce", password: "password", lastName: "Juravic", email: "sunce@cat.com"});
 //   console.log("resp=", resp);
 // }
 // test();

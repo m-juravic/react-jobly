@@ -107,6 +107,16 @@ function App() {
     Navigate("/");
   }
 
+  async function handleRegister(formData) {
+    try {
+      const token = await JoblyApi.registerUser(formData);
+      setToken(token);
+    } catch (err) {
+      console.log("error=", err);
+      throw new Error("Failed to register user");
+    }
+  }
+
   console.log("user state=", user)
 
   // TODO: Why does NotFound not show up?
@@ -121,7 +131,7 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header handleLogout={handleLogout} />
-          <RouteList handleLogin={handleLogin} />
+          <RouteList handleLogin={handleLogin} handleRegister={handleRegister} />
         </BrowserRouter>
       </div>
     </userContext.Provider>

@@ -5,8 +5,8 @@
  * - message
  */
 
-function NotFound({message="Not Found"}){
-  <h2>{message}</h2>
+function NotFound({message}){
+  <h2>123123 {message || "Not found."}</h2>
 }
 
 export default NotFound

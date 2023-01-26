@@ -1,11 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import "./Header.css";
 import userContext from "./userContext";
 import { useContext } from "react";
 
 /** Renders the header and navigation */
 
-function Header() {
+function Header({handleLogout}) {
   const { username } = useContext(userContext);
   return (
     <header className="Header">
@@ -16,7 +16,7 @@ function Header() {
             <NavLink to="/companies">Companies</NavLink>
             <NavLink to="/jobs">Jobs</NavLink>
             <NavLink to="/profile">Profile</NavLink>
-            <NavLink to="/profile">Log out, {username}.</NavLink>
+            <NavLink to="/" onClick={handleLogout}>Log out, {username}.</NavLink>
           </>
           }
           {!username && <>

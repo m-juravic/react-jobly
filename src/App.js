@@ -1,6 +1,5 @@
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Navigate } from 'react-router-dom';
 import userContext from "./userContext";
-import alertContext from "./alertContext";
 import './App.css';
 import Header from './Header';
 import RouteList from './RouteList';
@@ -18,25 +17,38 @@ const DEFAULT_USER_INFO = {
   isLoading: true
 };
 
-const DEFAULT_ALERTS = {};
-
 const BASE_URL = "http://localhost:3001";
 
 /** Renders application */
 
 function App() {
   const [user, setUser] = useState(DEFAULT_USER_INFO);
-  const [alerts, setAlerts] = useState(DEFAULT_ALERTS);
+  const [fetchingErrors, setFetchingErrors] = useState(false)
+
+  /** Set token to local storage */
 
   function setToken(token) {
     localStorage.setItem("token", token);
   }
 
+  /** Get token from local storage */
+
   function getToken() {
     return localStorage.getItem("token");
   }
 
+  /** Remove token from local storage */
+
+  function removeToken() {
+    localStorage.removeItem("token");
+  }
+
+  /** Fetches user information */
+
   async function fetchUserDataFromAPI() {
+
+    // TODO: use jwt_decode() instead of atob
+
     const token = getToken();
     const payload = JSON.parse(atob(token.split(".")[1]));
     const { username } = payload;
@@ -53,8 +65,10 @@ function App() {
         setUser(resp.data.user);
       } catch (err) {
         console.log(err);
-        // return <NotFound message="Problems fetching user..." />
-        return <h2>Problems fetching user...</h2>;
+        setFetchingErrors(true)
+        // return;
+        // // return <NotFound message="Problems fetching user..." />
+        // return <h2>Problems fetching user...</h2>;
       }
     }
   }
@@ -62,11 +76,11 @@ function App() {
   useEffect(function fetchAndSetUserInfo() {
     async function fetchUser() {
       const token = getToken();
+
       if (token) {
         console.log("token is present, fetch user info");
         fetchUserDataFromAPI();
       } else {
-        // TODO: remove
         console.log("DEBUG: no user token found");
       }
     }
@@ -75,33 +89,41 @@ function App() {
 
   // TODO: Ask if we should check presence of token or user.username
 
-  if (user.isLoading && getToken()) return <Loader />;
+  console.log("fetching errors=", fetchingErrors)
+
 
   async function handleLogin(formData) {
-    //TODO: need to send message if login is invalid
     try {
       const token = await JoblyApi.loginUser(formData);
       setToken(token);
-      setUser(u => ({
-        ...u,
-      }))
-    } catch(err) {
-      setAlerts({alert: "Invalid username or password"});
+      setUser(formData);
+    } catch (err) {
+      throw new Error("Failed to log the user in.");
     }
   }
 
-  console.log("alerts=", alerts);
+  function handleLogout() {
+    removeToken();
+    Navigate("/");
+  }
+
+  console.log("user state=", user)
+
+  // TODO: Why does NotFound not show up?
+  // if(fetchingErrors) return <NotFound message="Problems fetching data..." />
+  if(fetchingErrors) return <h2>Problems fetching....</h2>
+
+  if (user.isLoading && getToken()) return <Loader />;
+
 
   return (
     <userContext.Provider value={user}>
-    <alertContext.Provider value={alerts}>
       <div className="App">
         <BrowserRouter>
-          <Header />
-          <RouteList handleLogin={handleLogin}/>
+          <Header handleLogout={handleLogout} />
+          <RouteList handleLogin={handleLogin} />
         </BrowserRouter>
       </div>
-    </alertContext.Provider>
     </userContext.Provider>
   );
 }

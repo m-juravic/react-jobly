@@ -1,17 +1,19 @@
-import { useState, useContext } from "react";
-import { useNavigate } from 'react-router-dom'
-import alertContext from "./alertContext";
-import Alert from "./Alert"
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import Alert from "./Alert";
 
 const DEFAULT_FORMDATA = {
   username: "",
   password: ""
-}
+};
 
 function LoginForm({ handleLogin }) {
   const [formData, setFormData] = useState(DEFAULT_FORMDATA);
+  // const [formErrors, setFormErrors] = useState([]);
+  const [formError, setFormError] = useState("");
+
+
   const navigate = useNavigate();
-  const { alert } = useContext(alertContext);
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -21,16 +23,21 @@ function LoginForm({ handleLogin }) {
     }));
   }
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    handleLogin(formData);
-    setFormData(DEFAULT_FORMDATA);
-    if (!alert) navigate("/");
+
+    try {
+      await handleLogin(formData);
+      navigate("/");
+    } catch (err) {
+      setFormError(err.message);
+    }
   }
 
   return (
     <div>
-      {alert && <Alert />}
+      {formError && <Alert message={formError} />}
+
       <form onSubmit={handleSubmit} >
         <div>
           <div>Username</div>
@@ -38,6 +45,7 @@ function LoginForm({ handleLogin }) {
             name="username"
             value={formData.username}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -47,6 +55,7 @@ function LoginForm({ handleLogin }) {
             value={formData.password}
             onChange={handleChange}
             type="password"
+            required
           />
         </div>
         <button>Login</button>

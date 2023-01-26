@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm";
 
 /** Renders application routes */
 
-function RouteList({handleLogin}) {
+function RouteList({handleLogin, handleLogout}) {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
@@ -15,6 +15,8 @@ function RouteList({handleLogin}) {
       <Route path="/companies/:handle" element={<CompanyDetail />} />
       <Route path="/jobs" element={<JobList />} />
       <Route path="/login" element={<LoginForm handleLogin={handleLogin}/>} />
+      {/* <Route path="/logout"/> */}
+
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

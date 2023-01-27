@@ -51,7 +51,7 @@ function LoginForm({ handleLogin }) {
       await handleLogin(formData);
       navigate("/");
     } catch (err) {
-      console.log("err=", err)
+      console.log("err=", err);
       setFormErrors(err);
     }
   }
@@ -71,7 +71,10 @@ function LoginForm({ handleLogin }) {
                 name="username"
                 onChange={handleChange}
                 value={formData.username}
-                type="text" />
+                type="text"
+                required
+              />
+
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -81,6 +84,7 @@ function LoginForm({ handleLogin }) {
                 onChange={handleChange}
                 value={formData.password}
                 type="password"
+                required
               />
             </Form.Group>
 

@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Alert from "./Alert";
 
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+
 const DEFAULT_FORMDATA = {
   username: "",
   password: "",
@@ -51,58 +55,73 @@ function RegisterForm({ handleRegister }) {
 
   return (
     <div>
+      {formErrors.length > 0 && <Alert messages={formErrors} variant="danger" />}
 
-      {formErrors.length > 0 ? <Alert messages={formErrors} type="danger" /> : null}
+      <h1 className="mb-3">Register</h1>
 
-      <form onSubmit={handleSubmit} >
-        <div>
-          <div>Username</div>
-          <input
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <div>Password</div>
-          <input
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            type="password"
-            required
-          />
-        </div>
-        <div>
-          <div>First Name</div>
-          <input
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <div>Last Name</div>
-          <input
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <div>Email</div>
-          <input
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button>Submit</button>
-      </form>
+      <Card>
+        <Card.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                name="username"
+                onChange={handleChange}
+                value={formData.username}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                onChange={handleChange}
+                value={formData.password}
+                type="password"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                name="firstName"
+                onChange={handleChange}
+                value={formData.firstName}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                name="lastName"
+                onChange={handleChange}
+                value={formData.lastName}
+                required
+              />
+            </Form.Group>
+
+
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                name="email"
+                onChange={handleChange}
+                value={formData.email}
+                type="email"
+                required
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

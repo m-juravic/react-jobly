@@ -75,11 +75,20 @@ class JoblyApi {
   }
 
   /** Get logged in user */
-  static async getCurrentUser(username) {
 
+  static async getCurrentUser(username) {
     const res = await this.request(`users/${username}`);
     return res.user;
   }
+
+  /** Update user info */
+
+  static async updateUser(data, username) {
+    const res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
+
+  }
+
 
 }
 // async function test() {

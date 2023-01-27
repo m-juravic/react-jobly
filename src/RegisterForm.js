@@ -13,7 +13,7 @@ const DEFAULT_FORMDATA = {
 /** Form for registering.
  *
  * State:
- * - formData, formError
+ * - formData, formErrors
  *
  * Props:
  * - handleRegister: function to call in parent.

@@ -63,7 +63,6 @@ function App() {
           isLoading: false
         });
       }
-
     }
     fetchUser();
   }, [token]);
@@ -95,6 +94,14 @@ function App() {
     setToken(token);
   }
 
+  /** Handles user profile update */
+
+  async function handleUpdate(formData) {
+    JoblyApi.token = token;
+    await JoblyApi.updateUser(formData, user.data.username);
+    await fetchUserDataFromAPI();
+  }
+
 
   if (user.isLoading) return <Loader />;
 
@@ -104,7 +111,11 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header handleLogout={handleLogout} />
-          <RouteList handleLogin={handleLogin} handleRegister={handleRegister} />
+          <RouteList
+            handleLogin={handleLogin}
+            handleRegister={handleRegister}
+            handleUpdate={handleUpdate}
+          />
         </BrowserRouter>
       </div>
     </userContext.Provider>

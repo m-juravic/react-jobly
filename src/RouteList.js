@@ -11,7 +11,7 @@ import { useContext } from "react";
 
 /** Renders application routes */
 
-function RouteList({handleLogin, handleRegister}) {
+function RouteList({handleLogin, handleRegister, handleUpdate}) {
   const { user } = useContext(userContext);
 
   return (
@@ -24,7 +24,7 @@ function RouteList({handleLogin, handleRegister}) {
       <Route path="/companies" element={<CompanyList />} />
       <Route path="/companies/:handle" element={<CompanyDetail />} />
       <Route path="/jobs" element={<JobList />} />
-      <Route path="/profile" element={<ProfileForm />} />
+      <Route path="/profile" element={<ProfileForm handleUpdate={handleUpdate}/>} />
       </>
       }
       {/* <Route path="/logout"/> */}

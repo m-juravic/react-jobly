@@ -13,11 +13,9 @@ import { useContext, useState } from "react";
 
 
 function ProfileForm(){
-  const user = useContext(userContext);
-  console.log("user=", user)
+  const {user} = useContext(userContext);
 
   const [formData, setFormData] = useState(user);
-
   const [formErrors, setFormErrors] = useState([]);
 
   // TODO:

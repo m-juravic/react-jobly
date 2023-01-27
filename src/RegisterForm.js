@@ -8,7 +8,7 @@ const DEFAULT_FORMDATA = {
   firstName: "",
   lastName: "",
   email: ""
-}
+};
 
 /** Form for registering.
  *
@@ -44,68 +44,67 @@ function RegisterForm({ handleRegister }) {
       await handleRegister(formData);
       navigate("/");
     } catch (err) {
-      setFormErrors([err])
+      setFormErrors(err);
     }
     setFormData(DEFAULT_FORMDATA);
   }
 
-  console.log("form errors=", formErrors)
-
   return (
     <div>
-    {formErrors && formErrors.map(e => <Alert message={e.message} />)}
 
-    <form onSubmit={handleSubmit} >
-      <div>
-        <div>Username</div>
-        <input
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <div>Password</div>
-        <input
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          type="password"
-          required
-        />
-      </div>
-      <div>
-        <div>First Name</div>
-        <input
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <div>Last Name</div>
-        <input
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <div>Email</div>
-        <input
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <button>Submit</button>
-    </form>
-  </div>
-);
+      {formErrors.length > 0 ? <Alert messages={formErrors} type="danger" /> : null}
+
+      <form onSubmit={handleSubmit} >
+        <div>
+          <div>Username</div>
+          <input
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <div>Password</div>
+          <input
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            type="password"
+            required
+          />
+        </div>
+        <div>
+          <div>First Name</div>
+          <input
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <div>Last Name</div>
+          <input
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <div>Email</div>
+          <input
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button>Submit</button>
+      </form>
+    </div>
+  );
 }
 
 export default RegisterForm;

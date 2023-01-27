@@ -9,14 +9,14 @@ import userContext from "./userContext";
 /** Renders homepage. */
 
 function Homepage() {
-  const { username } = useContext(userContext);
+  const { user } = useContext(userContext);
 
   return (
     <>
       <h1>Jobly!</h1>
       <p>All the jobs in one, convenient place.</p>
-      {username && <h2>Welcome Back, {username}!</h2>}
-      {!username && <>
+      {user && <h2>Welcome Back, {user.username}!</h2>}
+      {!user && <>
         <Link to="/login">Login</Link> <br /><br />
         <Link to="/register">Sign up</Link>
       </>}

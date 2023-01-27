@@ -8,8 +8,10 @@
  * - Maybe a type for a message? ex: danger, info (BS5)
  */
 
-function Alert({message}) {
-  return <h2>{message}!</h2>
+function Alert({ messages }) {
+  return <>
+    {messages.map((m, i) => <p key={i}>{m}</p>)}
+  </>;
 }
 
 export default Alert;

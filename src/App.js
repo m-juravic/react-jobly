@@ -4,135 +4,103 @@ import './App.css';
 import Header from './Header';
 import RouteList from './RouteList';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import NotFound from './NotFound';
 import Loader from './Loader';
 import JoblyApi from './helpers/api';
-
-const DEFAULT_USER_INFO = {
-  username: null,
-  email: null,
-  firstName: null,
-  lastName: null,
-  isLoading: true
-};
-
-const BASE_URL = "http://localhost:3001";
+import decode from "jwt-decode";
 
 /** Renders application */
 
 function App() {
-  const [user, setUser] = useState(DEFAULT_USER_INFO);
-  const [fetchingErrors, setFetchingErrors] = useState(false)
+  const [user, setUser] = useState({
+    data: null,
+    isLoading: true
+  });
+  const [token, setToken] = useState(getTokenFromLocalStorage);
 
   /** Set token to local storage */
 
-  function setToken(token) {
+  function setTokenToLocalStorage(token) {
     localStorage.setItem("token", token);
   }
 
   /** Get token from local storage */
 
-  function getToken() {
+  function getTokenFromLocalStorage() {
     return localStorage.getItem("token");
   }
 
   /** Remove token from local storage */
 
-  function removeToken() {
+  function removeTokenFromLocalStorage() {
     localStorage.removeItem("token");
   }
 
   /** Fetches user information */
 
   async function fetchUserDataFromAPI() {
-
-    // TODO: use jwt_decode() instead of atob
-
-    const token = getToken();
-    const payload = JSON.parse(atob(token.split(".")[1]));
+    const payload = decode(token);
     const { username } = payload;
 
-    if (user.isLoading) {
-      try {
-        const resp = await axios.get(`${BASE_URL}/users/${username}`,
-          {
-            headers: {
-              Authorization: token
-            }
-          });
-        resp.data.user.isLoading = false;
-        setUser(resp.data.user);
-      } catch (err) {
-        console.log(err);
-        setFetchingErrors(true)
-        // return;
-        // // return <NotFound message="Problems fetching user..." />
-        // return <h2>Problems fetching user...</h2>;
-      }
-    }
+    JoblyApi.token = token;
+    const currentUser = await JoblyApi.getCurrentUser(username);
+    setUser({
+      data: currentUser,
+      isLoading: false
+    });
   }
+
+  // Every time the token changes trigger our use effect
 
   useEffect(function fetchAndSetUserInfo() {
     async function fetchUser() {
-      const token = getToken();
 
       if (token) {
-        console.log("token is present, fetch user info");
         fetchUserDataFromAPI();
       } else {
-        console.log("DEBUG: no user token found");
+        setUser({
+          data: null,
+          isLoading: false
+        });
       }
+
     }
     fetchUser();
-  }, []);
-
-  // TODO: Ask if we should check presence of token or user.username
-
-  console.log("fetching errors=", fetchingErrors)
-
+  }, [token]);
 
   /** Handles logging in. */
+
   async function handleLogin(formData) {
     try {
       const token = await JoblyApi.loginUser(formData);
+      setTokenToLocalStorage(token);
       setToken(token);
-      setUser(formData);
     } catch (err) {
       throw new Error("Failed to log the user in.");
     }
   }
 
   /** Handles logging out. */
+
   function handleLogout() {
-    removeToken();
-    Navigate("/");
+    removeTokenFromLocalStorage();
+    setToken(null);
   }
 
   /** Handles registration */
 
   async function handleRegister(formData) {
-    try {
-      const token = await JoblyApi.registerUser(formData);
-      setToken(token);
-      fetchUserDataFromAPI();
-    } catch (err) {
-      // console.log("error=", err);
-      throw new Error(err);
-    }
+    const token = await JoblyApi.registerUser(formData);
+    setTokenToLocalStorage(token);
+    setToken(token);
   }
 
-  console.log("user state=", user)
 
-  // TODO: Why does NotFound not show up?
-  // if(fetchingErrors) return <NotFound message="Problems fetching data..." />
-  if(fetchingErrors) return <h2>Problems fetching....</h2>
-
-  if (user.isLoading && getToken()) return <Loader />;
+  if (user.isLoading) return <Loader />;
 
 
   return (
-    <userContext.Provider value={user}>
+    <userContext.Provider value={{ user: user.data }}>
       <div className="App">
         <BrowserRouter>
           <Header handleLogout={handleLogout} />

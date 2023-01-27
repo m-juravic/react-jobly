@@ -32,4 +32,5 @@ function commaInsert(numStr) {
   return result;
 }
 
-module.exports = convertAndFormat;
+//module.exports = convertAndFormat;
+export default convertAndFormat;

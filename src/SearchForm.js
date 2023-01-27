@@ -1,6 +1,8 @@
 import { useState } from "react";
-import "./SearchForm.css";
 
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 /**
  *Search Form for both jobs and companies
@@ -13,8 +15,6 @@ import "./SearchForm.css";
  *
  * {CompanyList or JobList} => SearchForm
  *
- * TODO:
- *  - Make form not submitable if empty
  */
 function SearchForm({ handleSearch }) {
 
@@ -31,23 +31,29 @@ function SearchForm({ handleSearch }) {
 
   /** Call parent function and clear form. */
   function handleSubmit(evt) {
-    evt.preventDefault()
-    handleSearch(formData.searchTerm.trim())
-    setFormData({searchTerm: ""})
+    evt.preventDefault();
+    handleSearch(formData.searchTerm.trim());
+    setFormData({ searchTerm: "" });
   }
 
   return (
     <div className="SearchForm">
       <form onSubmit={handleSubmit}>
-        <input
-          name="searchTerm"
-          onChange={handleChange}
-          value={formData.searchTerm}
-          placeholder="Enter search term.."
-          minLength={3}
-          required
+        <InputGroup className="mb-3">
+          <Form.Control
+            name="searchTerm"
+            onChange={handleChange}
+            value={formData.searchTerm}
+            minLength={3}
+            placeholder="Enter search term..."
+            aria-label="search"
+            aria-describedby="search"
+            required
           />
-        <button type="submit">Submit</button>
+          <Button variant="outline-secondary" id="button-addon2">
+            Search
+          </Button>
+        </InputGroup>
       </form>
     </div>
   );

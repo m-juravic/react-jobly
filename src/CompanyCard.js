@@ -1,5 +1,7 @@
-import "./CompanyCard.css"
 import { Link } from "react-router-dom"
+
+import ListGroup from 'react-bootstrap/ListGroup';
+import Image from 'react-bootstrap/Image'
 
 /**
  * Renders a company card
@@ -9,11 +11,17 @@ import { Link } from "react-router-dom"
  */
 function CompanyCard({ handle, description, logo }) {
   return (
-    <div className="CompanyCard">
-      <Link to={`/companies/${handle}`}>{handle}</Link>
-      <p>{description}</p>
-      {logo && <img src={logo} alt={handle}/>}
-    </div>
+    <ListGroup.Item
+      action
+      href={`/companies/${handle}`}>
+        <div className="d-flex justify-content-between">
+          <div className="me-3">
+            <p className="">{handle}</p>
+            <p className="text-muted"><small>{description}</small></p>
+          </div>
+          {logo && <Image src={logo} alt={handle} fluid={true} />}
+        </div>
+      </ListGroup.Item>
   );
 }
 

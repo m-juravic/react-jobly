@@ -3,7 +3,9 @@ import JoblyApi from "./helpers/api";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
 import Loader from "./Loader";
-import NotFound from "./NotFound";
+
+import ListGroup from 'react-bootstrap/ListGroup';
+
 
 /**
  * Lists Companies
@@ -56,14 +58,29 @@ function CompanyList() {
   return (
     <div>
       <SearchForm handleSearch={handleSearch} />
+
+      <ListGroup>
+        {companies.companies.length > 0 && companies.companies.map(c => (
+          <CompanyCard
+            key={c.handle}
+            description={c.description}
+            handle={c.handle}
+            logo={c.logoUrl} />
+        ))}
+      </ListGroup>
+
+
+
+
+
+
+
+
+      {/*
       {companies.companies.length > 0 && companies.companies.map(c => (
-        <CompanyCard
-          key={c.handle}
-          description={c.description}
-          handle={c.handle}
-          logo={c.logoUrl} />
+
       ))}
-      {companies.companies.length === 0 && <h2>No companies found.</h2>}
+      {companies.companies.length === 0 && <h2>No companies found.</h2>} */}
     </div>
   );
 }

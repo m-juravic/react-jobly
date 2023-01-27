@@ -38,7 +38,6 @@ function ProfileForm({ handleUpdate }) {
       navigate("/profile");
     } catch (err) {
       setFormErrors(err);
-      console.log("errors=", err)
     }
   }
 

@@ -96,10 +96,16 @@ function App() {
 
   /** Handles user profile update */
 
+  //TODO: rework to get user from API rather than fetchUserDataFromAPI
   async function handleUpdate(formData) {
     JoblyApi.token = token;
-    await JoblyApi.updateUser(formData, user.data.username);
-    await fetchUserDataFromAPI();
+    const newUserInfo = await JoblyApi.updateUser(formData, user.data.username);
+    setUser(prevState => ({
+      ...prevState,
+      data: {...prevState.data, ...newUserInfo}
+    }))
+    //debugger;
+    // await fetchUserDataFromAPI();
   }
 
 

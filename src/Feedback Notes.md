@@ -29,6 +29,7 @@ We do not need to Navigate() because if set token to null it will trigger a re-r
 
 # Questions
 1. What's the difference between:
+    because our initial error state is [] which is truthy. Can set to null rather than [] or use .length
 
 ```jsx
     {formErrors ? <Alert messages={formErrors} type="danger" /> : null}

@@ -17,15 +17,21 @@ function RouteList({handleLogin, handleRegister, handleUpdate}) {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/login" element={<LoginForm handleLogin={handleLogin}/>} />
-      <Route path="/register" element={<RegisterForm handleRegister={handleRegister}/>} />
 
-      {user && <>
-      <Route path="/companies" element={<CompanyList />} />
-      <Route path="/companies/:handle" element={<CompanyDetail />} />
-      <Route path="/jobs" element={<JobList />} />
-      <Route path="/profile" element={<ProfileForm handleUpdate={handleUpdate}/>} />
-      </>
+      {!user &&
+        <>
+          <Route path="/login" element={<LoginForm handleLogin={handleLogin}/>} />
+          <Route path="/register" element={<RegisterForm handleRegister={handleRegister}/>} />
+        </>
+      }
+
+      {user &&
+        <>
+          <Route path="/companies" element={<CompanyList />} />
+          <Route path="/companies/:handle" element={<CompanyDetail />} />
+          <Route path="/jobs" element={<JobList />} />
+          <Route path="/profile" element={<ProfileForm handleUpdate={handleUpdate}/>} />
+        </>
       }
       {/* <Route path="/logout"/> */}
 

@@ -1,32 +1,57 @@
-import { Navigate, NavLink } from "react-router-dom";
-import "./Header.css";
 import userContext from "./userContext";
-import { useContext } from "react";
+import { useContext, useLocation } from "react";
 
-/** Renders the header and navigation */
+
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
+/**
+ * Renders the header and navigation
+ *
+ * TODO:
+ * - Show active class
+ *
+ * */
 
 function Header({ handleLogout }) {
   const { user } = useContext(userContext);
+
   return (
-    <header className="Header">
-      <nav>
-        <NavLink to="/">Jobly</NavLink>
-        <div>
-          {user && <>
-            <NavLink to="/companies">Companies</NavLink>
-            <NavLink to="/jobs">Jobs</NavLink>
-            <NavLink to="/profile">Profile</NavLink>
-            <NavLink to="/" onClick={handleLogout}>Log out, {user.username}.</NavLink>
-          </>
-          }
-          {!user && <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/register">Sign up</NavLink>
-          </>
-          }
-        </div>
-      </nav>
-    </header>
+
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">Jobly</Navbar.Brand>
+        <Navbar.Toggle aria-controls="jobly-nav" />
+        <Navbar.Collapse id="jobly-nav">
+
+          <Nav className="ms-auto">
+
+            {!user &&
+              <>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/register">Register</Nav.Link>
+              </>
+            }
+
+            <Nav.Link href="/companies">Companies</Nav.Link>
+            <Nav.Link href="/jobs">Jobs</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
+
+            {user &&
+              <NavDropdown title={user.username} id="basic-nav-dropdown">
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/logout">
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+              }
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

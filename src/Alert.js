@@ -9,9 +9,9 @@
  */
 
 function Alert({ messages }) {
-  return <>
-    {messages.map((m, i) => <p key={i}>{m}</p>)}
-  </>;
+  // return <>
+  //   {messages.map((m, i) => <p key={i}>{m}</p>)}
+  // </>;
 }
 
 export default Alert;

@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import Loader from './Loader';
 import JoblyApi from './helpers/api';
 import decode from "jwt-decode";
+import { Container } from 'react-bootstrap';
 
 /** Renders application */
 
@@ -102,8 +103,8 @@ function App() {
     const newUserInfo = await JoblyApi.updateUser(formData, user.data.username);
     setUser(prevState => ({
       ...prevState,
-      data: {...prevState.data, ...newUserInfo}
-    }))
+      data: { ...prevState.data, ...newUserInfo }
+    }));
     //debugger;
     // await fetchUserDataFromAPI();
   }
@@ -114,16 +115,16 @@ function App() {
 
   return (
     <userContext.Provider value={{ user: user.data }}>
-      <div className="App">
-        <BrowserRouter>
-          <Header handleLogout={handleLogout} />
+      <BrowserRouter>
+        <Header handleLogout={handleLogout} />
+        <Container>
           <RouteList
             handleLogin={handleLogin}
             handleRegister={handleRegister}
             handleUpdate={handleUpdate}
           />
-        </BrowserRouter>
-      </div>
+        </Container>
+      </BrowserRouter>
     </userContext.Provider>
   );
 }

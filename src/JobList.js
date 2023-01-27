@@ -5,6 +5,8 @@ import Loader from "./Loader";
 import NotFound from "./NotFound";
 import SearchForm from "./SearchForm";
 
+import ListGroup from 'react-bootstrap/ListGroup';
+
 /**
  * Lists jobs
  *
@@ -31,7 +33,7 @@ function JobList() {
 
   useEffect(function fetchAndSetJobs() {
     async function fetchJobs() {
-      handleSearch()
+      handleSearch();
     }
     fetchJobs();
   }, []);
@@ -44,7 +46,7 @@ function JobList() {
         jobs: resp
       }));
     } catch (err) {
-      return <NotFound message="Problems fetching job data..." />
+      return <NotFound message="Problems fetching job data..." />;
     }
   }
 
@@ -54,7 +56,10 @@ function JobList() {
   return (
     <div>
       <SearchForm handleSearch={handleSearch} />
-      <JobListCard jobs={jobs.jobs} />
+
+      <ListGroup>
+        <JobListCard jobs={jobs.jobs} />
+      </ListGroup>
       {jobs.jobs.length === 0 && <h2>No jobs found.</h2>}
     </div>
   );

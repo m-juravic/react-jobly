@@ -1,5 +1,6 @@
-import "./JobCard.css";
-import convertAndFormat from "./helpers/currencyConverter"
+import convertAndFormat from "./helpers/currencyConverter";
+
+import ListGroup from 'react-bootstrap/ListGroup';
 
 /**
  *Simple presentation component for Job
@@ -12,12 +13,14 @@ import convertAndFormat from "./helpers/currencyConverter"
 
 function JobCard({ id, title, salary, company, equity }) {
   return (
-    <div className="JobCard" id={id}>
-      <h3>Title: {title}</h3>
-      <h4>Company: {company}</h4>
-      <p>Salary: ${convertAndFormat(salary)}</p>
-      {equity && <p>Equity: {equity}</p>}
-    </div>
+    <ListGroup.Item >
+      <div id={id}>
+        <h3>Title: {title}</h3>
+        <p>Company: {company}</p>
+        <p>Salary: ${convertAndFormat(salary)}</p>
+        {equity && <p>Equity: {equity}</p>}
+      </div>
+    </ListGroup.Item>
   );
 }
 

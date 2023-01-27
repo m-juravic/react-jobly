@@ -3,6 +3,10 @@ import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Alert from "./Alert";
 
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+
 /** Form for updating profile.
  *
  * State:
@@ -54,44 +58,58 @@ function ProfileForm({ handleUpdate }) {
     <div>
       {formErrors.length > 0 ? <Alert messages={formErrors} type="danger" /> : null}
 
-      <form onSubmit={handleSubmit} method="patch">
-        <div>
-          <div>Username</div>
-          <input
-            value={user.username}
-            readOnly
-            disabled
-          />
-        </div>
-        <div>
-          <div>First Name</div>
-          <input
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <div>Last Name</div>
-          <input
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <div>Email</div>
-          <input
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button>Save Changes</button>
-      </form>
+      <h1 className="mb-3">Profile</h1>
+
+      <Card>
+        <Card.Body>
+          <Form onSubmit={handleSubmit} method="patch">
+            <Form.Group className="mb-3" controlId="formUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                name="username"
+                value={user.username}
+                readOnly
+                disabled
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                name="firstName"
+                onChange={handleChange}
+                value={formData.firstName}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                name="lastName"
+                onChange={handleChange}
+                value={formData.lastName}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                name="email"
+                onChange={handleChange}
+                value={formData.email}
+                required
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

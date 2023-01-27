@@ -4,12 +4,12 @@ import JobCard from "./JobCard";
  * Creates individual job cards
  *
  * Prop:
- * - jobs, companyName
+ * - jobs
  *
  * {JobList} => JobListCard
  */
 
-function JobListCard({ jobs, companyName }) {
+function JobListCard({ jobs }) {
   return (
     <>
       {jobs.map(j => (
@@ -19,7 +19,7 @@ function JobListCard({ jobs, companyName }) {
           title={j.title}
           salary={j.salary}
           equity={j.equity}
-          company={companyName}
+          company={j.companyName}
         />
       ))}
     </>

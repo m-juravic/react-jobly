@@ -39,7 +39,6 @@ function Header({ handleLogout }) {
               <>
                 <Nav.Link href="/companies">Companies</Nav.Link>
                 <Nav.Link href="/jobs">Jobs</Nav.Link>
-                <Nav.Link href="/profile">Profile</Nav.Link>
 
                 <NavDropdown title={user.username} id="basic-nav-dropdown">
                   <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

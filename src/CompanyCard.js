@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image'
 

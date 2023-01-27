@@ -1,3 +1,5 @@
+import BSAlert from 'react-bootstrap/Alert';
+
 /**
  * Renders an alert
  *
@@ -8,10 +10,10 @@
  * - Maybe a type for a message? ex: danger, info (BS5)
  */
 
-function Alert({ messages }) {
-  // return <>
-  //   {messages.map((m, i) => <p key={i}>{m}</p>)}
-  // </>;
+function Alert({ messages, variant }) {
+  return <>
+    {messages.map((m, i) => (<BSAlert key={i} variant={variant}>{m}</BSAlert>))}
+  </>;
 }
 
 export default Alert;

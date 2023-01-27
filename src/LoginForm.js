@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Alert from "./Alert";
 
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+
 const DEFAULT_FORMDATA = {
   username: "",
   password: ""
@@ -21,8 +25,8 @@ const DEFAULT_FORMDATA = {
 
 function LoginForm({ handleLogin }) {
   const [formData, setFormData] = useState(DEFAULT_FORMDATA);
-  // const [formErrors, setFormErrors] = useState([]);
-  const [formError, setFormError] = useState("");
+  const [formErrors, setFormErrors] = useState([]);
+  // const [formError, setFormError] = useState("");
 
   const navigate = useNavigate();
 
@@ -36,6 +40,8 @@ function LoginForm({ handleLogin }) {
     }));
   }
 
+  console.log(formData);
+
   /** Call parent function and clear form. */
 
   async function handleSubmit(evt) {
@@ -45,36 +51,45 @@ function LoginForm({ handleLogin }) {
       await handleLogin(formData);
       navigate("/");
     } catch (err) {
-      setFormError(err.message);
+      console.log("err=", err)
+      setFormErrors(err);
     }
   }
 
   return (
     <div>
-      {formError && <Alert message={formError} />}
+      {formErrors.length > 0 && <Alert messages={formErrors} variant="danger" />}
 
-      <form onSubmit={handleSubmit} >
-        <div>
-          <div>Username</div>
-          <input
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <div>Password</div>
-          <input
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            type="password"
-            required
-          />
-        </div>
-        <button>Login</button>
-      </form>
+      <h1 className="mb-3">Login</h1>
+
+      <Card>
+        <Card.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                name="username"
+                onChange={handleChange}
+                value={formData.username}
+                type="text" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                onChange={handleChange}
+                value={formData.password}
+                type="password"
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Log in
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 

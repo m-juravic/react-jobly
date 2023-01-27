@@ -71,13 +71,9 @@ function App() {
   /** Handles logging in. */
 
   async function handleLogin(formData) {
-    try {
-      const token = await JoblyApi.loginUser(formData);
-      setTokenToLocalStorage(token);
-      setToken(token);
-    } catch (err) {
-      throw new Error("Failed to log the user in.");
-    }
+    const token = await JoblyApi.loginUser(formData);
+    setTokenToLocalStorage(token);
+    setToken(token);
   }
 
   /** Handles logging out. */
@@ -117,7 +113,7 @@ function App() {
     <userContext.Provider value={{ user: user.data }}>
       <BrowserRouter>
         <Header handleLogout={handleLogout} />
-        <Container>
+        <Container className="my-3">
           <RouteList
             handleLogin={handleLogin}
             handleRegister={handleRegister}

@@ -35,19 +35,21 @@ function Header({ handleLogout }) {
               </>
             }
 
-            <Nav.Link href="/companies">Companies</Nav.Link>
-            <Nav.Link href="/jobs">Jobs</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
-
             {user &&
-              <NavDropdown title={user.username} id="basic-nav-dropdown">
-                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="/logout">
-                  Logout
-                </NavDropdown.Item>
-              </NavDropdown>
-              }
+              <>
+                <Nav.Link href="/companies">Companies</Nav.Link>
+                <Nav.Link href="/jobs">Jobs</Nav.Link>
+                <Nav.Link href="/profile">Profile</Nav.Link>
+
+                <NavDropdown title={user.username} id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={handleLogout} href="/logout">
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            }
           </Nav>
         </Navbar.Collapse>
       </Container>
